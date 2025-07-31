@@ -1,25 +1,12 @@
+// src/RotaPJHome.jsx
 // RotaPJ App – Interface profissional responsiva com salvamento local de clientes e pedidos
-import { Card, CardContent } from './components/ui/card';
-import { Button } from './components/ui/button';
-import { Input } from './components/ui/input';
-import { Textarea } from './components/ui/textarea';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
+
 import React, { useState } from 'react';
-- import { Card, CardContent } from '@/components/ui/card';
-+ import { Card, CardContent } from './components/ui/card';
-
-- import { Button } from '@/components/ui/button';
-+ import { Button } from './components/ui/button';
-
-- import { Input } from '@/components/ui/input';
-+ import { Input } from './components/ui/input';
-
-- import { Textarea } from '@/components/ui/textarea';
-+ import { Textarea } from './components/ui/textarea';
-
-- import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-+ import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
-
+import { Card, CardContent } from './components/ui/card.jsx';
+import { Button } from './components/ui/button.jsx';
+import { Input } from './components/ui/input.jsx';
+import { Textarea } from './components/ui/textarea.jsx';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs.jsx';
 import { Home, FileText, Map, ShoppingCart, Users, BarChart2 } from 'lucide-react';
 
 export default function RotaPJHome() {
@@ -42,12 +29,8 @@ export default function RotaPJHome() {
   };
 
   const handleSalvarCliente = () => {
-    const novoCliente = {
-      nome: nomeEmpresa,
-      endereco,
-      contato
-    };
-    setClientes([...clientes, novoCliente]);
+    const novoCliente = { nome: nomeEmpresa, endereco, contato };
+    setClientes(prev => [...prev, novoCliente]);
     setNomeEmpresa('');
     setEndereco('');
     setContato('');
@@ -55,13 +38,8 @@ export default function RotaPJHome() {
   };
 
   const handleSalvarPedido = () => {
-    const novoPedido = {
-      cliente: clientePedido,
-      produtos,
-      pagamento,
-      observacoes: obsPedido
-    };
-    setPedidos([...pedidos, novoPedido]);
+    const novoPedido = { cliente: clientePedido, produtos, pagamento, observacoes: obsPedido };
+    setPedidos(prev => [...prev, novoPedido]);
     setClientePedido('');
     setProdutos('');
     setPagamento('');
@@ -78,19 +56,27 @@ export default function RotaPJHome() {
 
       <Tabs defaultValue="propostas" className="w-full">
         <TabsList className="grid grid-cols-5 mb-4 gap-2 text-xs sm:text-sm">
-          <TabsTrigger value="propostas"><FileText size={16}/> Propostas</TabsTrigger>
-          <TabsTrigger value="rotas"><Map size={16}/> Rotas</TabsTrigger>
-          <TabsTrigger value="clientes"><Users size={16}/> Clientes</TabsTrigger>
-          <TabsTrigger value="pedidos"><ShoppingCart size={16}/> Pedidos</TabsTrigger>
-          <TabsTrigger value="admin"><BarChart2 size={16}/> Admin</TabsTrigger>
+          <TabsTrigger value="propostas"><FileText size={16} /> Propostas</TabsTrigger>
+          <TabsTrigger value="rotas"><Map size={16} /> Rotas</TabsTrigger>
+          <TabsTrigger value="clientes"><Users size={16} /> Clientes</TabsTrigger>
+          <TabsTrigger value="pedidos"><ShoppingCart size={16} /> Pedidos</TabsTrigger>
+          <TabsTrigger value="admin"><BarChart2 size={16} /> Admin</TabsTrigger>
         </TabsList>
 
         <TabsContent value="propostas">
           <Card>
             <CardContent className="space-y-4 pt-6">
               <h2 className="text-xl font-semibold">📋 Criar Proposta Comercial</h2>
-              <Input value={cliente} onChange={(e) => setCliente(e.target.value)} placeholder="Nome do cliente" />
-              <Textarea value={descricao} onChange={(e) => setDescricao(e.target.value)} placeholder="Descrição da proposta" />
+              <Input
+                value={cliente}
+                onChange={e => setCliente(e.target.value)}
+                placeholder="Nome do cliente"
+              />
+              <Textarea
+                value={descricao}
+                onChange={e => setDescricao(e.target.value)}
+                placeholder="Descrição da proposta"
+              />
               <Button className="w-full" onClick={handlePDF}>Gerar PDF</Button>
             </CardContent>
           </Card>
@@ -110,9 +96,21 @@ export default function RotaPJHome() {
           <Card>
             <CardContent className="space-y-4 pt-6">
               <h2 className="text-xl font-semibold">👥 Cadastrar Cliente</h2>
-              <Input value={nomeEmpresa} onChange={(e) => setNomeEmpresa(e.target.value)} placeholder="Nome da empresa" />
-              <Input value={endereco} onChange={(e) => setEndereco(e.target.value)} placeholder="Endereço" />
-              <Input value={contato} onChange={(e) => setContato(e.target.value)} placeholder="Telefone ou e-mail" />
+              <Input
+                value={nomeEmpresa}
+                onChange={e => setNomeEmpresa(e.target.value)}
+                placeholder="Nome da empresa"
+              />
+              <Input
+                value={endereco}
+                onChange={e => setEndereco(e.target.value)}
+                placeholder="Endereço"
+              />
+              <Input
+                value={contato}
+                onChange={e => setContato(e.target.value)}
+                placeholder="Telefone ou e-mail"
+              />
               <Button className="w-full" onClick={handleSalvarCliente}>Salvar Cliente</Button>
             </CardContent>
           </Card>
@@ -122,10 +120,26 @@ export default function RotaPJHome() {
           <Card>
             <CardContent className="space-y-4 pt-6">
               <h2 className="text-xl font-semibold">🧾 Criar Pedido</h2>
-              <Input value={clientePedido} onChange={(e) => setClientePedido(e.target.value)} placeholder="Cliente" />
-              <Input value={produtos} onChange={(e) => setProdutos(e.target.value)} placeholder="Produtos e quantidades" />
-              <Input value={pagamento} onChange={(e) => setPagamento(e.target.value)} placeholder="Forma de pagamento" />
-              <Textarea value={obsPedido} onChange={(e) => setObsPedido(e.target.value)} placeholder="Observações" />
+              <Input
+                value={clientePedido}
+                onChange={e => setClientePedido(e.target.value)}
+                placeholder="Cliente"
+              />
+              <Input
+                value={produtos}
+                onChange={e => setProdutos(e.target.value)}
+                placeholder="Produtos e quantidades"
+              />
+              <Input
+                value={pagamento}
+                onChange={e => setPagamento(e.target.value)}
+                placeholder="Forma de pagamento"
+              />
+              <Textarea
+                value={obsPedido}
+                onChange={e => setObsPedido(e.target.value)}
+                placeholder="Observações"
+              />
               <Button className="w-full" onClick={handleSalvarPedido}>Salvar Pedido</Button>
             </CardContent>
           </Card>
@@ -135,7 +149,9 @@ export default function RotaPJHome() {
           <Card>
             <CardContent className="space-y-4 pt-6 text-center">
               <h2 className="text-2xl font-semibold">📊 Painel Administrativo</h2>
-              <p>Visualização de relatórios, metas, desempenho e dados em tempo real (em breve).</p>
+              <p>
+                Visualização de relatórios, metas, desempenho e dados em tempo real (em breve).
+              </p>
               <Button className="mt-4">Acessar Relatórios</Button>
             </CardContent>
           </Card>
